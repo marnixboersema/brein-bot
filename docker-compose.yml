@@ -1,0 +1,31 @@
+# Snippet to merge into the existing brein-open-webui docker-compose.yml
+# (or run as a separate compose project that joins Open WebUI's default network).
+#
+# The bot joins the network Compose created for the `brein-open-webui` project,
+# so it can reach Open WebUI at the internal hostname `open-webui:8080`.
+#
+# If your Open WebUI compose project directory is named differently, change
+# `brein-open-webui_default` below to match `<that-dir>_default`.
+
+services:
+  brein-bot:
+    build: .
+    container_name: brein-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - brein-bot-data:/data
+    networks:
+      - openwebui
+    depends_on: []
+    mem_limit: 512m
+
+volumes:
+  brein-bot-data:
+    name: brein-bot-data
+
+networks:
+  openwebui:
+    name: brein-open-webui_default
+    external: true
