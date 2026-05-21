@@ -99,6 +99,9 @@ class OpenWebUIClient:
         if resp.status_code != 200:
             raise OpenWebUIError(f"list KBs failed: {resp.status_code} {resp.text[:200]}")
         data = resp.json()
+        # Open WebUI returns either a bare list (older builds) or {"items": [...]} (v0.9+).
+        if isinstance(data, dict) and "items" in data:
+            data = data["items"]
         out: list[KnowledgeBase] = []
         for item in data:
             out.append(
