@@ -69,13 +69,13 @@ Fill in every value:
 
 ## 5 — Start it
 
-The bot's compose file joins the Open WebUI compose project's default network. That network is created the first time Open WebUI runs. Verify the name:
+The bot's compose file joins Open WebUI's existing network. On the brein VPS, Open WebUI lives at `/opt/brein` so its Compose project name is `brein` and its default network is `brein_default` — which is what `docker-compose.yml` here references. Verify with:
 
 ```bash
-docker network ls | grep open-webui
+docker network ls | grep brein
 ```
 
-If your existing project directory is `brein-open-webui`, the network is `brein-open-webui_default` — which is what `docker-compose.yml` here references. If the name differs, edit the `networks:` block in `docker-compose.yml`.
+If the network name differs on your host, edit the `networks:` block in `docker-compose.yml`.
 
 Then:
 
